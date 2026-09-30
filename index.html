@@ -288,6 +288,28 @@ ul.plain{margin:0;padding-left:18px} ul.plain li{margin:4px 0}
 table.balls{min-width:680px}
 table.balls td:first-child{white-space:nowrap;font-weight:900}
 table.balls td.x{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:900;color:var(--accent)}
+/* Sumário lateral + voltar ao topo */
+[data-toc]{scroll-margin-top:var(--hdr,16px)}
+#toc{position:fixed;top:calc(var(--hdr,16px) + 4px);right:max(16px,calc((100vw - 1280px)/2 + 16px));width:190px;max-height:calc(100dvh - var(--hdr,16px) - 24px);overflow:auto;z-index:4;background:var(--surface);border:2px solid var(--line);border-radius:var(--r2);padding:8px;display:none}
+#toc h4,#tocSheet h4{margin:4px 8px 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:900}
+.tocl{display:grid;gap:1px}
+.tocl button{appearance:none;border:0;background:none;font:inherit;text-align:left;color:var(--fg);font-size:13px;font-weight:800;padding:5px 8px;border-radius:8px;cursor:pointer;line-height:1.25}
+.tocl button small{display:block;font-size:11px;font-weight:700;color:var(--muted)}
+.tocl button:hover{background:var(--surface-2)}
+.tocl button[aria-current="true"]{background:var(--fg);color:var(--bg)}
+.tocl button[aria-current="true"] small{color:var(--bg);opacity:.8}
+.tocl button:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+@media (min-width:1180px){body.has-toc #toc{display:block}body.has-toc .panel{margin-right:206px}}
+.fab{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));z-index:6;appearance:none;border:2px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;font-weight:900;border-radius:99px;box-shadow:var(--shadow);cursor:pointer;display:none;align-items:center;gap:6px}
+.fab:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#toTop{right:16px;width:46px;height:46px;justify-content:center;padding:0}
+#toTop svg{width:20px;height:20px}
+body.scrolled #toTop{display:inline-flex}
+#tocBtn{left:16px;height:46px;padding:0 16px;font-size:14px}
+@media (max-width:1179px){body.has-toc #tocBtn{display:inline-flex}}
+#tocSheet{border:2px solid var(--line);border-radius:var(--r);padding:10px;background:var(--surface);color:var(--fg);width:min(360px,calc(100vw - 32px));max-height:min(70dvh,560px);box-shadow:var(--shadow)}
+#tocSheet::backdrop{background:var(--backdrop)}
+#tocSheet .tocl button{font-size:14px;padding:8px 10px}
 @media (max-width:700px){header.top{position:static}}
 @media (max-width:560px){h1{font-size:23px}.count b{font-size:32px}.grid{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
@@ -393,7 +415,7 @@ img{max-width:100%}
     <button class="chip" data-t="t-pelago">Poké Pelago</button><button class="chip" data-t="t-cap">Capturador</button><button class="chip" data-t="t-ball">Poké Bolas</button><button class="chip" data-t="t-sos">SOS</button><button class="chip" data-t="t-abil">Habilidades</button><button class="chip" data-t="t-breed">Breeding</button><button class="chip" data-t="t-roto">Roto Loto</button><button class="chip" data-t="t-mais">Mais dicas</button>
   </nav>
 
-  <section class="tsec" id="t-pelago"><h2>Poké Pelago: suba todas as ilhas pro nível máximo</h2>
+  <section class="tsec" id="t-pelago" data-toc="Poké Pelago"><h2>Poké Pelago: suba todas as ilhas pro nível máximo</h2>
     <p class="lead">Abre depois da provação do Kiawe e é o melhor ajudante da Living Dex. Cada ilha sobe até o nível 3 com Poké Beans e com mais Pokémon nas boxes, e uma Living Dex enche as boxes rapidinho.</p>
     <div class="tcards">
       <article class="tcard star"><h3>Isle Aphun · expedições</h3><p>Manda seus Pokémon explorar a caverna. A expedição “Path for Brilliant Stone Hunting!” traz pedras de evolução, e as outras trazem fósseis, itens raros e itens caros pra vender e comprar Poké Bolas.</p></article>
@@ -404,7 +426,7 @@ img{max-width:100%}
     </div>
   </section>
 
-  <section class="tsec" id="t-cap"><h2>Tenha um capturador na party</h2>
+  <section class="tsec" id="t-cap" data-toc="Capturador"><h2>Tenha um capturador na party</h2>
     <p class="lead">Um Pokémon só pra deixar o alvo com 1 HP e dormindo. Deixe ele sempre na party: quanto mais forte, mais tempo aguenta nas capturas difíceis, como lendários e Ultra Beasts. Numa SOS chain, não ponha o chamador pra dormir nem paralise: com status ele não pede ajuda. Sono e paralisia são só pro Pokémon que você vai capturar.</p>
     <div class="tcards">
       <article class="tcard star"><h3>Parasect <span class="later">Parte 4</span></h3><p>O capturador mais completo. Paras em Brooklet Hill de dia, evolui no Nv. 24. Aprende <b>Spore</b> no Nv. 22 (dorme em 100% das vezes) e <b>False Swipe</b> por TM.</p></article>
@@ -416,7 +438,7 @@ img{max-width:100%}
     </div>
   </section>
 
-  <section class="tsec" id="t-ball"><h2>Poké Bolas</h2>
+  <section class="tsec" id="t-ball" data-toc="Poké Bolas"><h2>Poké Bolas</h2>
     <p class="lead">Na Gen 7, as bolas especiais bem usadas batem a Ultra Ball com folga. As lojas especiais ficam num balcão separado dentro do Poké Mart.</p>
     <div class="tblwrap"><table class="balls">
       <thead><tr><th>Bola</th><th>Bônus</th><th>Quando usar</th><th>Onde comprar</th></tr></thead>
@@ -435,7 +457,7 @@ img{max-width:100%}
     </table></div>
   </section>
 
-  <section class="tsec" id="t-sos"><h2>SOS: como fazer chain em Ultra Sun/Ultra Moon</h2>
+  <section class="tsec" id="t-sos" data-toc="SOS"><h2>SOS: como fazer chain em Ultra Sun/Ultra Moon</h2>
     <p class="lead">Vários Pokémon da lista só aparecem chamados por outro. Em Ultra Sun/Ultra Moon as regras mudaram em relação a Sun/Moon, e isso muda quando vale a pena caçar.</p>
     <div class="tcards">
       <article class="tcard star"><h3>Sem Adrenaline Orb, não tem chain</h3><p>Em Ultra Sun/Ultra Moon o Pokémon selvagem só chama ajuda <b>uma vez por batalha</b> se você não usar uma Adrenaline Orb. Com ela, ele continua chamando.</p><p>A Adrenaline Orb só vende nos Poké Marts depois da <b>3ª provação (Kiawe), a partir da Parte 5</b>. Antes disso há poucas no chão, como na Route 4 e no Paniola Ranch. Pros Pokémon de 1% por chamada, vale esperar ter as orbs pra caçar.</p></article>
@@ -447,7 +469,7 @@ img{max-width:100%}
     </div>
   </section>
 
-  <section class="tsec" id="t-abil"><h2>Habilidades que funcionam fora da batalha</h2>
+  <section class="tsec" id="t-abil" data-toc="Habilidades"><h2>Habilidades que funcionam fora da batalha</h2>
     <p class="lead">Com o Pokémon certo na <b>primeira posição da party</b>, a habilidade muda os encontros selvagens.</p>
     <div class="tcards">
       <article class="tcard star"><h3>Static · Magnet Pull</h3><p>Static puxa Pokémon tipo Elétrico, e Magnet Pull puxa tipo Aço (metade dos encontros, quando o lugar tem desse tipo). Pichu/Pikachu e Magnemite aparecem desde a Parte 1.</p></article>
@@ -459,7 +481,7 @@ img{max-width:100%}
     </div>
   </section>
 
-  <section class="tsec" id="t-breed"><h2>Breeding</h2>
+  <section class="tsec" id="t-breed" data-toc="Breeding"><h2>Breeding</h2>
     <p class="lead">Muita pré-evolução da lista só sai de ovo. O Pokémon Nursery fica no Paniola Ranch.</p>
     <div class="tcards">
       <article class="tcard star"><h3>Ditto, o mestre do breeding <span class="later">Parte 6</span></h3><p>Cruza com quase qualquer Pokémon. Os primeiros saem da missão “Ditto Five”: comece na delegacia da Route 9 e ache os cinco Dittos (1 na Route 9 e 4 em Konikoni City). Pegue todos.</p></article>
@@ -470,7 +492,7 @@ img{max-width:100%}
     </div>
   </section>
 
-  <section class="tsec" id="t-roto"><h2>Roto Loto: não ignore seu Rotom triste</h2>
+  <section class="tsec" id="t-roto" data-toc="Roto Loto"><h2>Roto Loto: não ignore seu Rotom triste</h2>
     <p class="lead">O Rotom Dex sorteia poderes temporários. Quanto mais você conversa e interage com ele, mais animado ele fica e melhores os poderes. Guarde cada um pra hora certa.</p>
     <div class="tcards">
       <article class="tcard star"><h3>Roto Exp. Points</h3><p>Muito mais EXP. Perfeito pra levar alguém até o nível de evoluir.</p></article>
@@ -482,7 +504,7 @@ img{max-width:100%}
     </div>
   </section>
 
-  <section class="tsec" id="t-mais"><h2>Mais dicas</h2>
+  <section class="tsec" id="t-mais" data-toc="Mais dicas"><h2>Mais dicas</h2>
     <div class="tcards">
       <article class="tcard"><h3>Island Scan</h3><p>Cada Pokédex QR escaneado dá 10 pontos; com 100 pontos você faz um Island Scan. O Pokémon muda por ilha e por dia da semana. A aba Rotas mostra o dia de cada um.</p></article>
       <article class="tcard"><h3>Salve antes de encontro único</h3><p>Lendários, Ultra Beasts, encontros fixos e o Wimpod da Route 8 só dão uma chance. Salve antes e use Timer Ball, Quick Ball e o capturador.</p></article>
@@ -641,6 +663,10 @@ img{max-width:100%}
 </footer>
 </div>
 
+<nav id="toc" aria-label="Seções desta aba"><h4 id="tocTitle">Nesta aba</h4><div class="tocl" id="tocList"></div></nav>
+<button class="fab" id="tocBtn" aria-haspopup="dialog"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h12M4 10h12M4 14h8"/></svg><span>Seções</span></button>
+<button class="fab" id="toTop" aria-label="Voltar ao topo"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16V4M4.5 9.5 10 4l5.5 5.5"/></svg></button>
+<dialog id="tocSheet" aria-labelledby="tocSheetT"><h4 id="tocSheetT">Ir para</h4><div class="tocl" id="tocSheetList"></div></dialog>
 <dialog class="det" id="bk" aria-labelledby="bkTitle">
   <div class="dh"><div style="min-width:0"><h2 id="bkTitle">Levar o progresso pra outro aparelho</h2><p class="sub" style="margin:0">O progresso fica salvo só neste navegador. Pra usar em outro celular ou computador, copie o código abaixo e cole lá em "Carregar".</p></div><button class="x" id="bkClose" aria-label="Fechar">×</button></div>
   <div class="db"><textarea id="bkCode" rows="4" class="search" style="font-family:ui-monospace,Menlo,monospace;font-size:12px;resize:vertical" aria-label="Código do progresso" spellcheck="false"></textarea>
@@ -699,7 +725,7 @@ for(const [i,d] of DATA.entries()){
     const cnt=DATA.filter(x=>secKey(x)===k).length;
     const h=document.createElement('h2');h.className='sec';
     h.innerHTML=k==='dex'?'Dex de Alola <span>'+cnt+' entradas · ordem da Pokédex de Ultra Sun/Ultra Moon</span>':k==='rest'?'Fora da Dex de Alola <span>'+cnt+' entradas · agrupados por família evolutiva</span>':'Extras <span>'+cnt+' shinies e formas especiais</span>';
-    frag.appendChild(h);secs.push({h,k});
+    h.id='dexsec-'+k;h.dataset.toc=k==='dex'?'Dex de Alola':k==='rest'?'Fora da Dex':'Extras';frag.appendChild(h);secs.push({h,k});
   }
   const b=document.createElement('div');b.className='card';b.dataset.n=d.id;
   b.innerHTML='<button class="check" role="checkbox" aria-checked="false" aria-label="Capturado: '+esc(d.name)+'"><span>'+CHECK+'</span></button><button class="open" aria-haspopup="dialog"><img alt="" src="'+src(d)+'"><span class="num">'+numLabel(d)+'</span><span class="nm">'+esc(d.name)+'</span><span class="tags">'+tagsFor(d)+'</span><span class="how">'+esc(d.how)+'</span><span class="loc">Box '+d.box+' · linha '+d.r+' · coluna '+d.c+'</span></button>';
@@ -724,7 +750,7 @@ for(let b=0;b<nb;b++){
     const s=document.createElement('button');s.className='slot'+(d.o==='e'?' ev':d.o==='s'?' sm':'');s.dataset.n=d.id;s.setAttribute('role','checkbox');
     s.setAttribute('aria-label',numLabel(d)+' '+d.name);s.title=numLabel(d)+' '+d.name;
     s.innerHTML='<img alt="" src="'+src(d)+'">';g.appendChild(s);slots.set(d.id,s)}
-  box.appendChild(g);frag.appendChild(box);boxEls.push({el:box,items,bc:box.querySelector('.bc')});
+  box.id='box-'+(b+1);box.dataset.toc='Box '+(b+1);box.dataset.tocSub=items[0].a?apad(items[0].a)+'–'+apad(items[items.length-1].a):items[0].name+' → '+items[items.length-1].name;box.appendChild(g);frag.appendChild(box);boxEls.push({el:box,items,bc:box.querySelector('.bc')});
 }
 boxesEl.appendChild(frag);}
 boxesEl.addEventListener('click',e=>{const s=e.target.closest('.slot[data-n]');if(s)toggle(s.dataset.n)});
@@ -826,7 +852,7 @@ const itEls=[];
 {const body=document.getElementById('itBody');let h='';
  const firstSrc=i=>i.src.slice().sort((a,b)=>a.s-b.s)[0];
  for(const [cat,label] of Object.entries(IT.cats)){const L=IT.items.filter(i=>i.cat===cat);if(!L.length)continue;
-  h+='<section data-cat="'+cat+'"><h2 class="sec" style="margin:22px 0 10px">'+esc(label)+'</h2><div class="icards">'+L.map(i=>{
+  h+='<section data-cat="'+cat+'" id="itcat-'+cat+'" data-toc="'+esc(label)+'"><h2 class="sec" style="margin:22px 0 10px">'+esc(label)+'</h2><div class="icards">'+L.map(i=>{
    const chip=d=>'<button class="um" data-n="'+d.id+'"><img alt="" src="'+src(d)+'"><span>'+esc(d.name)+'</span></button>';
    return '<article class="icard" id="item-'+i.id+'" data-i="'+i.id+'"><div class="ih"><h3>'+esc(i.name)+'</h3><span class="later">A partir da Parte '+i.s+'</span></div>'+
     '<h4>Pra evoluir</h4><div class="uml">'+i.for.map(n=>chip(byN.get(n))).join('')+'</div>'+
@@ -892,7 +918,7 @@ function applyState(){
   document.getElementById('bar').style.width=(n/TOTAL*100).toFixed(2)+'%';
   const rows=[['var(--fg)','USUM',cnt(d=>d.o==='u')],['var(--sun)','Ultra Sun',cnt(d=>inGame(d,'US'))],['var(--moon)','Ultra Moon',cnt(d=>inGame(d,'UM'))],['var(--sm)','Só Sun/Moon',cnt(d=>d.o==='s')],['var(--ev)','Eventos',cnt(d=>d.o==='e')],['var(--muted)','Base sem eventos',cnt(d=>d.o==='u'||d.o==='s')]];
   document.getElementById('stats').innerHTML=rows.map(r=>'<span class="stat"><span class="dot" style="background:'+r[0]+'"></span>'+r[1]+' <em>'+r[2][0]+'/'+r[2][1]+'</em></span>').join('');
-  filter();filterOrd();refreshRoutes();filterItems();renderHome();
+  filter();filterOrd();refreshRoutes();filterItems();renderHome();refreshToc();
 }
 function filter(){
   const q=norm(state.q.trim());let shown=0;
@@ -1003,6 +1029,42 @@ function renderUS(){let h='<h3>Quantos anéis aparecem, por distância</h3><div 
   return '<div class="ucol"><h4>'+sw(c)+'Buraco '+UCOL[c][0]+' · '+UCOL[c][1]+'</h4>'+(std.length?'<div class="uml">'+std.map(li).join('')+'</div>':'')+(leg.length?'<p class="hint">Lendários</p><div class="uml">'+leg.map(li).join('')+'</div>':'')+'</div>'}).join('')+'</div><p class="hint">* precisa de outros lendários no time. US/UM = só Ultra Sun / só Ultra Moon.</p>';
  h+='<h3>Ultra Beasts por anel (buraco branco)</h3>'+[793,794,796,797,799].map(n=>{const x=byN.get(String(n));const nm={793:'Nihilego',794:'Buzzwole (US) / Pheromosa (UM)',796:'Xurkitree',797:'Celesteela (UM) / Kartana (US)',799:'Guzzlord'}[n];return '<h4 class="ubh">'+nm+'</h4>'+ringTable(UBR[n])}).join('');
  const el=document.getElementById('usBody');el.innerHTML=h;el.addEventListener('click',e=>{const b=e.target.closest('.um');if(b)openDet(b.dataset.n)})}
+
+// Sumário lateral por aba + voltar ao topo
+const shortPart=s=>s.replace(/^Antes d[ao]s? (grande )?provaç(ão|ões) d[ao]s? /,'').replace(/^Antes d[ao] /,'').replace(' e da ',' e ');
+function tocEntries(pid){const P=document.getElementById(pid);if(!P||P.hidden)return [];const vis=el=>el&&!el.hidden&&el.offsetParent!==null;
+  if(pid==='p-ord')return ORD.filter(o=>vis(o.sec)).map(o=>{const k=o.sec.id.slice(4);let label,sub;
+    if(k[0]==='u'){label='Parte '+k.slice(1);sub=shortPart(RT.usec[k.slice(1)][0])}else if(k[0]==='s'){label='Sun/Moon · P'+k.slice(1);sub=shortPart(RT.smsec[k.slice(1)])}else if(k==='e'){label='Eventos';sub='PKSM'}else{label='Extras';sub='Box 23'}
+    const miss=o.items.filter(d=>!caught.has(d.id)).length;return {el:o.sec,label,sub:sub+(miss?' · faltam '+miss:' · completa')}});
+  if(pid==='p-us'){return [...P.querySelectorAll('#usBody h3')].map((h,i)=>{h.id=h.id||'us-'+i;h.dataset.toc=h.textContent;return {el:h,label:h.textContent}})}
+  return [...P.querySelectorAll('[data-toc]')].filter(vis).map(el=>({el,label:el.dataset.toc,sub:el.dataset.tocSub||''}))}
+const TOCT={'p-ord':'Partes','p-box':'Boxes','p-dex':'Seções','p-tip':'Dicas','p-it':'Itens','p-us':'Ultra Space'};
+let tocCur=[];
+function activePanel(){const t=tabs.find(([tb])=>document.getElementById(tb).getAttribute('aria-selected')==='true');return t?t[1]:null}
+function refreshToc(){const pid=activePanel();tocCur=TOCT[pid]?tocEntries(pid):[];
+  document.body.classList.toggle('has-toc',tocCur.length>1);
+  document.getElementById('tocTitle').textContent=TOCT[pid]||'';
+  const html=tocCur.map((e,i)=>'<button data-i="'+i+'">'+esc(e.label)+(e.sub?'<small>'+esc(e.sub)+'</small>':'')+'</button>').join('');
+  document.getElementById('tocList').innerHTML=html;document.getElementById('tocSheetList').innerHTML=html;spy()}
+function setHdr(){const h=document.querySelector('header.top');const sticky=getComputedStyle(h).position==='sticky';document.documentElement.style.setProperty('--hdr',(sticky?h.offsetHeight+10:12)+'px')}
+function spy(){document.body.classList.toggle('scrolled',scrollY>500);if(!tocCur.length)return;
+  const lim=(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hdr'))||16)+40;let cur=0;
+  tocCur.forEach((e,i)=>{if(e.el.getBoundingClientRect().top<=lim)cur=i});
+  document.querySelectorAll('#tocList button').forEach((b,i)=>b.setAttribute('aria-current',i===cur));
+  const a=document.querySelector('#tocList button[aria-current="true"]');const box=document.getElementById('toc');
+  if(a&&box.offsetParent){const r=a.offsetTop-box.scrollTop;if(r<0||r>box.clientHeight-30)box.scrollTop=a.offsetTop-box.clientHeight/2}}
+const goToc=i=>{const e=tocCur[i];if(e)e.el.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})};
+document.getElementById('tocList').addEventListener('click',e=>{const b=e.target.closest('button');if(b)goToc(+b.dataset.i)});
+const tocSheet=document.getElementById('tocSheet');
+document.getElementById('tocSheetList').addEventListener('click',e=>{const b=e.target.closest('button');if(b){tocSheet.close();goToc(+b.dataset.i)}});
+document.getElementById('tocBtn').addEventListener('click',()=>{document.getElementById('tocSheetT').textContent=document.getElementById('tocTitle').textContent||'Ir para';tocSheet.showModal()});
+tocSheet.addEventListener('click',e=>{if(e.target===tocSheet)tocSheet.close()});
+document.getElementById('toTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
+let spyRaf=0;addEventListener('scroll',()=>{if(!spyRaf)spyRaf=requestAnimationFrame(()=>{spyRaf=0;spy()})},{passive:true});
+addEventListener('resize',()=>{setHdr();spy()});
+{const w=f=>function(){const r=f.apply(this,arguments);refreshToc();return r};filterOrd=w(filterOrd);filterItems=w(filterItems);filter=w(filter);}
+{const _show=showTab;showTab=function(id){_show(id);window.scrollTo(0,0);setHdr();refreshToc()}}
+setHdr();
 renderUS();
 applyState();
 </script>
