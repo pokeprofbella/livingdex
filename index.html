@@ -555,9 +555,10 @@ img{max-width:100%}
       <button class="chip" data-v="miss" aria-pressed="false">Faltam</button>
     </div>
     <div class="seg" id="oGame" aria-label="Jogo">
-      <button class="chip" data-v="all" aria-pressed="true">US + UM</button>
+      <button class="chip" data-v="all" aria-pressed="true">Todos os jogos</button>
       <button class="chip" data-v="US" aria-pressed="false">Ultra Sun</button>
       <button class="chip" data-v="UM" aria-pressed="false">Ultra Moon</button>
+      <button class="chip" data-v="SM" aria-pressed="false">Sun/Moon</button>
     </div>
     <div class="seg" id="oJump" aria-label="Ir para a parte"></div>
   </div>
@@ -574,9 +575,10 @@ img{max-width:100%}
       <button class="chip" data-v="miss" aria-pressed="false">Faltam</button>
     </div>
     <div class="seg" id="rGame" aria-label="Jogo">
-      <button class="chip" data-v="all" aria-pressed="true">US + UM</button>
+      <button class="chip" data-v="all" aria-pressed="true">Todos os jogos</button>
       <button class="chip" data-v="US" aria-pressed="false">Ultra Sun</button>
       <button class="chip" data-v="UM" aria-pressed="false">Ultra Moon</button>
+      <button class="chip" data-v="SM" aria-pressed="false">Sun/Moon</button>
     </div>
   </div>
   <div class="rt">
@@ -642,18 +644,6 @@ img{max-width:100%}
     <thead><tr><th></th><th>Pokémon</th><th>Evento</th><th>Jogos</th><th>Observação</th></tr></thead>
     <tbody id="evBody"></tbody>
   </table></div>
-  <h3>Retirados da lista antiga</h3>
-  <ul class="plain">
-    <li><b>Deoxys, Keldeo, Genesect, Diancie, Volcanion:</b> nenhuma distribuição para Sun/Moon ou USUM. Só entram por transferência, então ficam no arco da Gen 6.</li>
-    <li><b>Phione:</b> não tem evento próprio. Continua na lista, mas sai do breeding do Manaphy de evento com Ditto.</li>
-    <li><b>Magearna:</b> não precisa de PKSM. O QR Code oficial destrava o evento no Hau’oli Mall e já está na base de 618. Dá para escanear no Azahar com o mesmo truque dos QR do Island Scan.</li>
-  </ul>
-  <h3>Adicionados</h3>
-  <ul class="plain">
-    <li><b>Munna e Musharna:</b> Fennel’s Munna, presente de fechamento da Global Link (2019–2020). Está no PKSM.</li>
-    <li><b>Linhas de Nidoran♀ e Nidoran♂, Poochyena, Yamask:</b> saem por breeding dos eventos japoneses de Nidoking (Giovanni), Mightyena (Archie) e Cofagrigus (Ghetsis).</li>
-    <li><b>Lunatone e Solrock:</b> Pokémon Daisuki Club (JP, 2017), só Moon e só Sun.</li>
-  </ul>
   <div class="src">Fontes: <a href="https://www.serebii.net/ultrasunultramoon/unobtainable.shtml" target="_blank" rel="noopener">Serebii, indisponíveis em USUM</a> · <a href="https://www.serebii.net/sunmoon/unobtainable.shtml" target="_blank" rel="noopener">Serebii, indisponíveis em Sun/Moon</a> · <a href="https://www.serebii.net/ultrasunultramoon/exclusives.shtml" target="_blank" rel="noopener">Serebii, exclusivos de versão</a> · <a href="https://www.serebii.net/sunmoon/qrscanner.shtml" target="_blank" rel="noopener">Serebii, Island Scan de Sun/Moon</a> · <a href="https://www.serebii.net/events/" target="_blank" rel="noopener">Serebii Eventdex</a> · <a href="https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_availability" target="_blank" rel="noopener">Bulbapedia, disponibilidade</a> · <a href="https://github.com/projectpokemon/EventsGallery" target="_blank" rel="noopener">Project Pokémon EventsGallery</a> · <a href="https://github.com/FlagBrew/PKSM" target="_blank" rel="noopener">PKSM</a></div>
 </section>
 <footer class="site">
@@ -764,7 +754,8 @@ boxesEl.addEventListener('click',e=>{const s=e.target.closest('.slot[data-n]');i
 // Ordem do jogo
 const oState={status:'all',game:'all'};
 const oRows=new Map();
-const inG=(d,g)=>g==='all'||inGame(d,g);
+const smOnly=d=>d.o==='s'||(d.o==='e'&&!/USUM/.test(d.g));
+const inG=(d,g)=>g==='all'||(g==='SM'?smOnly(d):inGame(d,g));
 const recG=(r,g)=>g==='all'||!r.g||r.g===g||r.g==='';
 function oCard(d){const b=document.createElement('div');b.className='orow';b.dataset.n=d.id;
   const later=d.bs&&d.po&&d.bs>d.po.s;
@@ -819,6 +810,7 @@ function recLine(r){const p=[];
   if(r.g)p.push({US:'só Ultra Sun',UM:'só Ultra Moon',SM:'em Sun/Moon',S:'só Sun',M:'só Moon'}[r.g]||r.g);
   return esc(p.join(' · '))}
 const recOk=r=>{const d=byN.get(r.id);if(!d)return false;if(rState.status==='miss'&&caught.has(r.id))return false;
+  if(rState.game==='SM')return ['SM','S','M'].includes(r.g);
   if(rState.game!=='all'){if(r.g&&r.g!==rState.game)return false;if(d.o==='u'&&d.v&&d.v!==rState.game)return false;if(r.g==='SM'||r.g==='S'||r.g==='M')return false}return true};
 function placeCounts(P){const ids=[...new Set(P.r.filter(r=>byN.has(r.id)).map(r=>r.id))];return [ids.filter(i=>caught.has(i)).length,ids.length]}
 function renderPlist(){const q=norm(rState.q.trim());let h='',isl='';
