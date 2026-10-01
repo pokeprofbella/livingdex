@@ -804,8 +804,11 @@ function toggleItem(id){itemsGot.has(id)?itemsGot.delete(id):itemsGot.add(id);sa
     const flat=d=>{const out=[d];(kids.get(d.id)||[]).sort((a,b)=>a.po.i-b.po.i).forEach(k=>out.push(...flat(k)));return out};
     for(const k of order){const roots=byPl.get(k).slice().sort((a,b)=>(a.r1??-1)-(b.r1??-1)||a.po.i-b.po.i);
       const list=[];roots.forEach(r=>list.push(...flat(r)));groups.push({label:k==='Breeding'?'Breeding (ovos)':k,list,steps:steps.filter(s=>s.pl===k)})}
-    if(evoOut.length){const list=[];evoOut.sort((a,b)=>a.po.i-b.po.i).forEach(r=>list.push(...flat(r)));groups.push({label:'Evoluir quem você já pegou antes',list,steps:[]})}
-    if(byPl.has('Island Scan')){const roots=byPl.get('Island Scan').slice().sort((a,b)=>(a.r1??9)-(b.r1??9)||a.po.i-b.po.i);const list=[];roots.forEach(r=>list.push(...flat(r)));groups.push({label:'Island Scan (opcional, por dia da semana)',list,steps:[]})}
+    // evolutions of earlier-part Pokémon: if their line starts in Island Scan, they belong to the Island Scan group
+    const rootOf=d=>{let c=d,guard=0;while(guard++<6){const p=c.par||c.bpar;if(!p||!byN.get(p))break;c=byN.get(p)}return c};
+    const evoIS=evoOut.filter(d=>rootOf(d).pl1==='Island Scan'),evoN=evoOut.filter(d=>rootOf(d).pl1!=='Island Scan');
+    if(evoN.length){const list=[];evoN.sort((a,b)=>a.po.i-b.po.i).forEach(r=>list.push(...flat(r)));groups.push({label:'Evoluir quem você já pegou antes',list,steps:[]})}
+    if(byPl.has('Island Scan')||evoIS.length){const roots=(byPl.get('Island Scan')||[]).slice().sort((a,b)=>(a.r1??9)-(b.r1??9)||a.po.i-b.po.i);const list=[];roots.forEach(r=>list.push(...flat(r)));evoIS.sort((a,b)=>a.po.i-b.po.i).forEach(r=>list.push(...flat(r)));groups.push({label:'Island Scan (opcional, por dia da semana)',list,steps:[]})}
   }else groups.push({label:'',list:items,steps:[]});
   const subs=[];
   for(const g of groups){let h=null;if(g.label){h=document.createElement('div');h.className='pgrp';h.innerHTML='<b>'+esc(g.label)+'</b><span></span>';sec.appendChild(h)}
